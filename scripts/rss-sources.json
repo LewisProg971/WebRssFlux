@@ -1,0 +1,80 @@
+[
+  {
+    "pillar": "dev-ia",
+    "pillarLabel": "Dev & IA",
+    "source": "VS Code",
+    "url": "https://code.visualstudio.com/feed.xml"
+  },
+  {
+    "pillar": "dev-ia",
+    "pillarLabel": "Dev & IA",
+    "source": "JetBrains",
+    "url": "https://blog.jetbrains.com/feed/"
+  },
+  {
+    "pillar": "dev-ia",
+    "pillarLabel": "Dev & IA",
+    "source": "TypeScript",
+    "url": "https://devblogs.microsoft.com/typescript/feed/"
+  },
+  {
+    "pillar": "dev-ia",
+    "pillarLabel": "Dev & IA",
+    "source": "Angular",
+    "url": "https://blog.angular.dev/feed"
+  },
+  {
+    "pillar": "dev-ia",
+    "pillarLabel": "Dev & IA",
+    "source": "Anthropic",
+    "url": "https://news.google.com/rss/search?q=site:anthropic.com/news&hl=en-US&gl=US&ceid=US:en"
+  },
+  {
+    "pillar": "dev-ia",
+    "pillarLabel": "Dev & IA",
+    "source": "Google AI",
+    "url": "https://blog.google/technology/ai/rss/"
+  },
+  {
+    "pillar": "dev-ia",
+    "pillarLabel": "Dev & IA",
+    "source": "Hugging Face",
+    "url": "https://huggingface.co/blog/feed.xml"
+  },
+  {
+    "pillar": "os-hardware",
+    "pillarLabel": "OS & Hardware",
+    "source": "Apple",
+    "url": "https://www.apple.com/newsroom/rss-feed.rss"
+  },
+  {
+    "pillar": "os-hardware",
+    "pillarLabel": "OS & Hardware",
+    "source": "Windows",
+    "url": "https://blogs.windows.com/feed/"
+  },
+  {
+    "pillar": "os-hardware",
+    "pillarLabel": "OS & Hardware",
+    "source": "NVIDIA Drivers",
+    "url": "https://www.reddit.com/r/nvidia/search.rss?q=flair_name%3A%22Driver%22&restrict_sr=1"
+  },
+  {
+    "pillar": "gaming",
+    "pillarLabel": "Gaming",
+    "source": "Epic Deals",
+    "url": "https://www.reddit.com/r/GameDeals/search.rss?q=site:epicgames.com+OR+title:epic&restrict_sr=on&sort=new&t=all"
+  },
+  {
+    "pillar": "gaming",
+    "pillarLabel": "Gaming",
+    "source": "Steam",
+    "url": "https://store.steampowered.com/feeds/news.xml"
+  },
+  {
+    "pillar": "gaming",
+    "pillarLabel": "Gaming",
+    "source": "Rockstar",
+    "url": "https://news.google.com/rss/search?q=site:rockstargames.com/newswire&hl=en-US&gl=US&ceid=US:en"
+  }
+]

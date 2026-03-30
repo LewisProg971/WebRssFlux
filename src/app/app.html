@@ -1,0 +1,71 @@
+<main class="dashboard">
+  <header class="hero">
+    <p class="eyebrow">Veille technologique quotidienne</p>
+    <h1>{{ title }}</h1>
+    <p class="subtitle">
+      Un tableau de bord unique pour suivre Dev, IA, OS, hardware et gaming.
+      @if (generatedAt()) {
+        <span class="stamp">Derniere mise a jour: {{ formatDate(generatedAt()) }}</span>
+      }
+    </p>
+  </header>
+
+  <section class="filters" aria-label="Filtres de categorie">
+    <button [class.active]="selectedPillar() === 'all'" (click)="setPillar('all')">Tout</button>
+    <button [class.active]="selectedPillar() === 'dev-ia'" (click)="setPillar('dev-ia')">Dev & IA</button>
+    <button [class.active]="selectedPillar() === 'os-hardware'" (click)="setPillar('os-hardware')">OS & Hardware</button>
+    <button [class.active]="selectedPillar() === 'gaming'" (click)="setPillar('gaming')">Gaming</button>
+  </section>
+
+  <section class="controls" aria-label="Recherche et tri">
+    <label class="search">
+      <span>Recherche</span>
+      <input
+        type="search"
+        placeholder="Titre, source, resume..."
+        [value]="searchQuery()"
+        (input)="setSearchQuery($any($event.target).value)"
+      />
+    </label>
+
+    <label class="sort">
+      <span>Tri</span>
+      <select [value]="sortMode()" (change)="setSortMode($any($event.target).value)">
+        <option value="newest">Plus recents</option>
+        <option value="oldest">Plus anciens</option>
+        <option value="source">Par source</option>
+      </select>
+    </label>
+
+    <p class="count">{{ displayedItems().length }} article(s)</p>
+  </section>
+
+  @if (loading()) {
+    <p class="state">Chargement du flux...</p>
+  } @else if (error()) {
+    <p class="state error">{{ error() }}</p>
+  } @else if (displayedItems().length === 0) {
+    <p class="state">Aucun article disponible pour ce filtre.</p>
+  } @else {
+    <section class="grid" aria-label="Articles RSS">
+      @for (item of displayedItems(); track item.link) {
+        <article class="card">
+          <div class="card-top">
+            <span class="pill">{{ item.pillarLabel }}</span>
+            <span class="source">{{ item.source }}</span>
+          </div>
+
+          <h2>
+            <a [href]="item.link" target="_blank" rel="noopener noreferrer">{{ item.title }}</a>
+          </h2>
+
+          <p class="summary">{{ item.summary || 'Aucun resume fourni.' }}</p>
+
+          <footer class="meta">
+            <span>{{ formatDate(item.publishedAt) }}</span>
+          </footer>
+        </article>
+      }
+    </section>
+  }
+</main>
