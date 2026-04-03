@@ -178,6 +178,24 @@ h1 {
 	font-size: 0.78rem;
 }
 
+.pill.dev-ia {
+	background: rgb(167 124 255 / 20%);
+	border-color: rgb(190 159 255 / 40%);
+	color: #e9deff;
+}
+
+.pill.os-hardware {
+	background: rgb(104 150 255 / 18%);
+	border-color: rgb(143 176 255 / 38%);
+	color: #deebff;
+}
+
+.pill.gaming {
+	background: rgb(98 189 106 / 18%);
+	border-color: rgb(137 212 143 / 38%);
+	color: #ddf7e0;
+}
+
 .source {
 	color: #e6c8b5;
 	font-size: 0.86rem;
@@ -208,7 +226,7 @@ h2 a:hover {
 	font-size: 0.93rem;
 	line-height: 1.45;
 	display: -webkit-box;
-	-webkit-line-clamp: 6;
+	-webkit-line-clamp: 3;
 	-webkit-box-orient: vertical;
 	overflow: hidden;
 }

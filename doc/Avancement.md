@@ -13,6 +13,10 @@
 - Uniformisation visuelle des cartes avec une hauteur fixe pour harmoniser la grille.
 - Limitation d'affichage des titres et resumes (line-clamp) pour eviter les cartes disproportionnees.
 - Mise en place du bouton de rafraichissement manuel des donnees RSS dans l'interface.
+- Colorisation des badges par categorie (Dev/OS/Gaming).
+- Ajustement du line-clamp de description a 3 lignes pour une grille plus lisible.
+- Dedoublonnage des articles par titre normalise dans le script RSS.
+- Exclusion des articles OS dont le titre contient "Windows 11 Insider Preview".
 
 ### 2026-03-30
 - Mise en place du projet Angular en racine.
@@ -29,5 +33,4 @@
 
 ## Prochaines actions
 - Verifier le rendu final mobile/desktop.
-- Ajouter un bouton de rafraichissement manuel des donnees.
 - Mettre en place le deploiement Vercel et la tache planifiee quotidienne.

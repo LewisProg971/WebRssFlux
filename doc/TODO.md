@@ -7,9 +7,9 @@
 ## A faire
 - [ ] Mettre en place le deploiement Vercel.
 - [ ] Configurer une mise a jour automatique quotidienne (Cron).
-- [ ] Ajouter un bouton de rafraichissement manuel des donnees.
 - [ ] Verifier le rendu final sur mobile et desktop.
 - [ ] Ajouter une section "sante des flux" (nombre de sources OK/KO).
+- [ ] Affiner la regle d'exclusion Windows Insider selon les besoins (liste blanche/noire par source).
 
 ## En cours
 - [ ] Aucun
@@ -20,3 +20,6 @@
 - [x] Ajouter filtres, recherche et tri dans le dashboard.
 - [x] Limiter les articles a 10 par categorie.
 - [x] Stabiliser les flux RSS en erreur (Angular, Anthropic, Rockstar).
+- [x] Ajouter un bouton de rafraichissement manuel des donnees.
+- [x] Coloriser les badges par categorie (Dev/OS/Gaming).
+- [x] Limiter les descriptions avec line-clamp pour l'homogeneite des cartes.

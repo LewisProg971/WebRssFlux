@@ -59,7 +59,14 @@
       @for (item of displayedItems(); track item.link) {
         <article class="card">
           <div class="card-top">
-            <span class="pill">{{ item.pillarLabel }}</span>
+            <span
+              class="pill"
+              [class.dev-ia]="item.pillar === 'dev-ia'"
+              [class.os-hardware]="item.pillar === 'os-hardware'"
+              [class.gaming]="item.pillar === 'gaming'"
+            >
+              {{ item.pillarLabel }}
+            </span>
             <span class="source">{{ item.source }}</span>
           </div>
 

@@ -35,12 +35,24 @@ function pickDate(item) {
   return date.toISOString();
 }
 
+function normalizeTitle(title) {
+  return String(title || '')
+    .toLowerCase()
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+function shouldSkipItem(source, itemTitle) {
+  return source.pillar === 'os-hardware' && /windows 11 insider preview/i.test(itemTitle);
+}
+
 async function main() {
   const sourcesRaw = await fs.readFile(sourcesPath, 'utf8');
   const sources = JSON.parse(sourcesRaw);
 
   const errors = [];
   const items = [];
+  const seenTitles = new Set();
 
   for (const source of sources) {
     try {
@@ -48,11 +60,24 @@ async function main() {
       const feedItems = (feed.items || []).slice(0, maxItemsPerSource);
 
       for (const item of feedItems) {
+        const title = item.title || 'Sans titre';
+
+        if (shouldSkipItem(source, title)) {
+          continue;
+        }
+
+        const normalizedTitle = normalizeTitle(title);
+        if (seenTitles.has(normalizedTitle)) {
+          continue;
+        }
+
+        seenTitles.add(normalizedTitle);
+
         items.push({
           pillar: source.pillar,
           pillarLabel: source.pillarLabel,
           source: source.source,
-          title: item.title || 'Sans titre',
+          title,
           link: item.link || item.guid || source.url,
           publishedAt: pickDate(item),
           summary: pickSummary(item)
