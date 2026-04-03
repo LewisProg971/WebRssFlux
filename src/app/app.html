@@ -80,10 +80,26 @@
           </div>
 
           <h2>
-            <a [href]="item.link" target="_blank" rel="noopener noreferrer">{{ item.title }}</a>
+            <a [href]="item.link" target="_blank" rel="noopener noreferrer">
+              @for (segment of searchSegments(item.title); track $index) {
+                @if (segment.match) {
+                  <mark class="match">{{ segment.text }}</mark>
+                } @else {
+                  <span>{{ segment.text }}</span>
+                }
+              }
+            </a>
           </h2>
 
-          <p class="summary">{{ item.summary || ui().noSummary }}</p>
+          <p class="summary">
+            @for (segment of searchSegments(item.summary || ui().noSummary); track $index) {
+              @if (segment.match) {
+                <mark class="match">{{ segment.text }}</mark>
+              } @else {
+                <span>{{ segment.text }}</span>
+              }
+            }
+          </p>
 
           <footer class="meta">
             <span>{{ formatDate(item.publishedAt) }}</span>

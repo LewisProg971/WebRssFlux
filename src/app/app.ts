@@ -45,6 +45,11 @@ type FeedPayload = {
 
 type SortMode = 'newest' | 'oldest' | 'source'
 
+type SearchSegment = {
+  text: string
+  match: boolean
+}
+
 const languageStorageKey = 'siteflux-rss-language'
 
 const translations: Record<Language, Translations> = {
@@ -241,6 +246,20 @@ export class App {
 
   protected get articleCountLabel(): string {
     return this.ui().articleCount(this.displayedItems().length)
+  }
+
+  protected searchSegments(value: string): SearchSegment[] {
+    const query = this.searchQuery().trim()
+    if (!query) {
+      return [{ text: value, match: false }]
+    }
+
+    const pattern = query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+    const regex = new RegExp(`(${pattern})`, 'ig')
+    return value.split(regex).filter(Boolean).map((segment) => ({
+      text: segment,
+      match: segment.toLowerCase() === query.toLowerCase(),
+    }))
   }
 
   private readStoredLanguage(): Language {

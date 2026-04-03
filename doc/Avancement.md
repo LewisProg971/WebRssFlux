@@ -19,6 +19,7 @@
 - Exclusion des articles OS dont le titre contient "Windows 11 Insider Preview".
 - Debut de l'internationalisation FR/EN de l'interface.
 - Persistance de la langue choisie dans localStorage.
+- Surlignage des correspondances dans les cartes lors de la recherche instantanee.
 
 ### 2026-03-30
 - Mise en place du projet Angular en racine.

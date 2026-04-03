@@ -267,6 +267,15 @@ h2 a:hover {
 	overflow: hidden;
 }
 
+.match {
+	background: rgba(242, 180, 127, 0.28);
+	color: #fff4eb;
+	padding: 0 0.12rem;
+	border-radius: 0.2rem;
+	box-decoration-break: clone;
+	-webkit-box-decoration-break: clone;
+}
+
 .meta {
 	margin-top: auto;
 	color: #d3ad94;
