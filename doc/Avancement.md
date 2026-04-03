@@ -21,6 +21,7 @@
 - Persistance de la langue choisie dans localStorage.
 - Surlignage des correspondances dans les cartes lors de la recherche instantanee.
 - Mode "A lire plus tard" avec favoris locaux stockes dans localStorage.
+- Affichage des dates en format relatif (ex: "il y a 2 heures").
 
 ### 2026-03-30
 - Mise en place du projet Angular en racine.

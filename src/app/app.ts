@@ -1,6 +1,8 @@
 import { CommonModule } from '@angular/common'
 import { HttpClient } from '@angular/common/http'
 import { Component, computed, inject, signal } from '@angular/core'
+import { formatDistanceToNow } from 'date-fns'
+import { enUS, fr } from 'date-fns/locale'
 
 type Pillar = 'all' | 'dev-ia' | 'os-hardware' | 'gaming'
 type FeedFilter = Pillar | 'favorites'
@@ -242,10 +244,11 @@ export class App {
       return this.ui().dateUnknown
     }
 
-    return new Intl.DateTimeFormat(this.language() === 'fr' ? 'fr-FR' : 'en-US', {
-      dateStyle: 'medium',
-      timeStyle: 'short'
-    }).format(new Date(value))
+    const locale = this.language() === 'fr' ? fr : enUS
+    return formatDistanceToNow(new Date(value), {
+      addSuffix: true,
+      locale,
+    })
   }
 
   private loadFeed(showLoadingState = true): void {
