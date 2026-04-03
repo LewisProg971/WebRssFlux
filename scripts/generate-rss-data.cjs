@@ -7,9 +7,10 @@ const sourcesPath = path.join(__dirname, 'rss-sources.json');
 const outputPath = path.join(rootDir, 'src', 'assets', 'data.json');
 const maxItemsPerSource = 20;
 const maxItemsPerCategory = 10;
+const rssTimeoutMs = 10_000;
 
 const parser = new Parser({
-  timeout: 15000,
+  timeout: rssTimeoutMs,
   requestOptions: {
     headers: {
       'user-agent': 'SiteFluxRssBot/1.0 (+https://github.com/)'
@@ -84,10 +85,15 @@ async function main() {
         });
       }
     } catch (error) {
+      const message = error instanceof Error ? error.message : String(error);
+
+      // A single feed failure must not fail the whole build.
+      console.warn(`Skipping source "${source.source}" (${source.url}): ${message}`);
+
       errors.push({
         source: source.source,
         url: source.url,
-        error: error instanceof Error ? error.message : String(error)
+        error: message
       });
     }
   }

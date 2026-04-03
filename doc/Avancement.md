@@ -22,6 +22,7 @@
 - Surlignage des correspondances dans les cartes lors de la recherche instantanee.
 - Mode "A lire plus tard" avec favoris locaux stockes dans localStorage.
 - Affichage des dates en format relatif (ex: "il y a 2 heures").
+- Renforcement de la resilience RSS: timeout 10s par flux + warning par source, sans casser le build global.
 
 ### 2026-03-30
 - Mise en place du projet Angular en racine.

@@ -25,3 +25,4 @@
 - [x] Limiter les descriptions avec line-clamp pour l'homogeneite des cartes.
 - [x] Ajouter le mode "A lire plus tard" avec favoris locaux.
 - [x] Afficher les dates en format relatif ("il y a 2 heures").
+- [x] Renforcer la resilience RSS (timeout par flux + warnings non bloquants).
