@@ -9,6 +9,10 @@
 - Automatisation cron: a faire
 
 ## Journal
+### 2026-04-03
+- Uniformisation visuelle des cartes avec une hauteur fixe pour harmoniser la grille.
+- Limitation d'affichage des titres et resumes (line-clamp) pour eviter les cartes disproportionnees.
+
 ### 2026-03-30
 - Mise en place du projet Angular en racine.
 - Ajout du script Node de generation RSS vers src/assets/data.json.
