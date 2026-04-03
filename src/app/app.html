@@ -24,6 +24,7 @@
     <button [class.active]="selectedPillar() === 'dev-ia'" (click)="setPillar('dev-ia')">{{ ui().categories['dev-ia'] }}</button>
     <button [class.active]="selectedPillar() === 'os-hardware'" (click)="setPillar('os-hardware')">{{ ui().categories['os-hardware'] }}</button>
     <button [class.active]="selectedPillar() === 'gaming'" (click)="setPillar('gaming')">{{ ui().categories.gaming }}</button>
+    <button [class.active]="selectedPillar() === 'favorites'" (click)="setPillar('favorites')">{{ ui().favoritesLabel }}</button>
   </section>
 
   <section class="controls" [attr.aria-label]="ui().searchLabel + ' ' + ui().sortLabel">
@@ -62,21 +63,33 @@
   } @else if (error()) {
     <p class="state error">{{ error() }}</p>
   } @else if (displayedItems().length === 0) {
-    <p class="state">{{ ui().noArticles }}</p>
+    <p class="state">{{ selectedPillar() === 'favorites' ? ui().noFavorites : ui().noArticles }}</p>
   } @else {
     <section class="grid" aria-label="Articles RSS">
       @for (item of displayedItems(); track item.link) {
         <article class="card">
           <div class="card-top">
-            <span
-              class="pill"
-              [class.dev-ia]="item.pillar === 'dev-ia'"
-              [class.os-hardware]="item.pillar === 'os-hardware'"
-              [class.gaming]="item.pillar === 'gaming'"
+            <div class="card-info">
+              <span
+                class="pill"
+                [class.dev-ia]="item.pillar === 'dev-ia'"
+                [class.os-hardware]="item.pillar === 'os-hardware'"
+                [class.gaming]="item.pillar === 'gaming'"
+              >
+                {{ item.pillarLabel }}
+              </span>
+              <span class="source">{{ item.source }}</span>
+            </div>
+
+            <button
+              class="bookmark"
+              type="button"
+              (click)="toggleFavorite(item)"
+              [class.active]="isFavorite(item)"
+              [attr.aria-label]="isFavorite(item) ? ui().bookmarkRemove : ui().bookmarkAdd"
             >
-              {{ item.pillarLabel }}
-            </span>
-            <span class="source">{{ item.source }}</span>
+              🔖
+            </button>
           </div>
 
           <h2>

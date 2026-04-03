@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http'
 import { Component, computed, inject, signal } from '@angular/core'
 
 type Pillar = 'all' | 'dev-ia' | 'os-hardware' | 'gaming'
+type FeedFilter = Pillar | 'favorites'
 type Language = 'fr' | 'en'
 type ErrorKey = 'load-feed'
 
@@ -12,6 +13,7 @@ type Translations = {
   subtitle: string
   lastUpdated: string
   categories: Record<Pillar, string>
+  favoritesLabel: string
   searchLabel: string
   searchPlaceholder: string
   sortLabel: string
@@ -25,6 +27,9 @@ type Translations = {
   dateUnknown: string
   loadFeedError: string
   languageLabel: string
+  noFavorites: string
+  bookmarkAdd: string
+  bookmarkRemove: string
 }
 
 type RssItem = {
@@ -51,6 +56,7 @@ type SearchSegment = {
 }
 
 const languageStorageKey = 'siteflux-rss-language'
+const favoritesStorageKey = 'siteflux-rss-favorites'
 
 const translations: Record<Language, Translations> = {
   fr: {
@@ -64,6 +70,7 @@ const translations: Record<Language, Translations> = {
       'os-hardware': 'OS & Hardware',
       gaming: 'Gaming',
     },
+    favoritesLabel: 'Mes Favoris',
     searchLabel: 'Recherche',
     searchPlaceholder: 'Titre, source, resume...',
     sortLabel: 'Tri',
@@ -81,6 +88,9 @@ const translations: Record<Language, Translations> = {
     dateUnknown: 'Date inconnue',
     loadFeedError: 'Impossible de charger les donnees RSS. Lance npm run rss:build puis reessaie.',
     languageLabel: 'Langue',
+    noFavorites: 'Aucun favori enregistré pour le moment.',
+    bookmarkAdd: 'Ajouter aux favoris',
+    bookmarkRemove: 'Retirer des favoris',
   },
   en: {
     eyebrow: 'Daily tech watch',
@@ -93,6 +103,7 @@ const translations: Record<Language, Translations> = {
       'os-hardware': 'OS & Hardware',
       gaming: 'Gaming',
     },
+    favoritesLabel: 'My Favorites',
     searchLabel: 'Search',
     searchPlaceholder: 'Title, source, summary...',
     sortLabel: 'Sort',
@@ -110,6 +121,9 @@ const translations: Record<Language, Translations> = {
     dateUnknown: 'Unknown date',
     loadFeedError: 'Unable to load RSS data. Run npm run rss:build and try again.',
     languageLabel: 'Language',
+    noFavorites: 'No saved favorites yet.',
+    bookmarkAdd: 'Add to favorites',
+    bookmarkRemove: 'Remove from favorites',
   },
 }
 
@@ -123,7 +137,7 @@ export class App {
   private readonly http = inject(HttpClient)
 
   protected readonly language = signal<Language>('fr')
-  protected readonly selectedPillar = signal<Pillar>('all')
+  protected readonly selectedPillar = signal<FeedFilter>('all')
   protected readonly items = signal<RssItem[]>([])
   protected readonly generatedAt = signal<string | null>(null)
   protected readonly loading = signal(true)
@@ -131,11 +145,17 @@ export class App {
   protected readonly error = signal<string | null>(null)
   protected readonly searchQuery = signal('')
   protected readonly sortMode = signal<SortMode>('newest')
+  protected readonly favoriteLinks = signal<string[]>([])
 
   protected readonly ui = computed(() => translations[this.language()])
 
   protected readonly filteredItems = computed(() => {
     const pillar = this.selectedPillar()
+    if (pillar === 'favorites') {
+      const favorites = this.favoriteLinks()
+      return this.items().filter((item) => favorites.includes(item.link))
+    }
+
     if (pillar === 'all') {
       return this.items()
     }
@@ -175,10 +195,11 @@ export class App {
 
   constructor() {
     this.language.set(this.readStoredLanguage())
+    this.favoriteLinks.set(this.readStoredFavorites())
     this.loadFeed()
   }
 
-  protected setPillar(pillar: Pillar): void {
+  protected setPillar(pillar: FeedFilter): void {
     this.selectedPillar.set(pillar)
   }
 
@@ -189,6 +210,21 @@ export class App {
 
   protected setSearchQuery(value: string): void {
     this.searchQuery.set(value)
+  }
+
+  protected toggleFavorite(item: RssItem): void {
+    const currentFavorites = this.favoriteLinks()
+    const isFavorite = currentFavorites.includes(item.link)
+    const nextFavorites = isFavorite
+      ? currentFavorites.filter((link) => link !== item.link)
+      : [...currentFavorites, item.link]
+
+    this.favoriteLinks.set(nextFavorites)
+    this.writeStoredFavorites(nextFavorites)
+  }
+
+  protected isFavorite(item: RssItem): boolean {
+    return this.favoriteLinks().includes(item.link)
   }
 
   protected setSortMode(value: string): void {
@@ -277,5 +313,33 @@ export class App {
     }
 
     window.localStorage.setItem(languageStorageKey, language)
+  }
+
+  private readStoredFavorites(): string[] {
+    if (typeof window === 'undefined') {
+      return []
+    }
+
+    const storedFavorites = window.localStorage.getItem(favoritesStorageKey)
+    if (!storedFavorites) {
+      return []
+    }
+
+    try {
+      const parsedFavorites = JSON.parse(storedFavorites)
+      return Array.isArray(parsedFavorites)
+        ? parsedFavorites.filter((value): value is string => typeof value === 'string')
+        : []
+    } catch {
+      return []
+    }
+  }
+
+  private writeStoredFavorites(favorites: string[]): void {
+    if (typeof window === 'undefined') {
+      return
+    }
+
+    window.localStorage.setItem(favoritesStorageKey, JSON.stringify(favorites))
   }
 }

@@ -201,8 +201,16 @@ h1 {
 
 .card-top {
 	display: flex;
-	align-items: center;
+	align-items: flex-start;
 	justify-content: space-between;
+	gap: 1rem;
+}
+
+.card-info {
+	display: flex;
+	align-items: center;
+	flex-wrap: wrap;
+	align-items: center;
 	gap: 1rem;
 }
 
@@ -235,6 +243,32 @@ h1 {
 .source {
 	color: #e6c8b5;
 	font-size: 0.86rem;
+}
+
+.bookmark {
+	border: 1px solid rgb(242 188 152 / 34%);
+	background: rgb(59 40 31 / 42%);
+	color: #f8ece3;
+	border-radius: 999px;
+	min-width: 2.2rem;
+	min-height: 2.2rem;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	cursor: pointer;
+	transition: transform 140ms ease, background 140ms ease, color 140ms ease;
+	flex-shrink: 0;
+}
+
+.bookmark:hover {
+	transform: translateY(-1px);
+	background: rgb(86 55 40 / 64%);
+}
+
+.bookmark.active {
+	background: linear-gradient(120deg, #f2b47f, #d06943);
+	color: #2f1a11;
+	border-color: transparent;
 }
 
 h2 {
@@ -318,5 +352,9 @@ h2 a:hover {
 
 	.card {
 		height: 340px;
+	}
+
+	.card-info {
+		gap: 0.55rem;
 	}
 }

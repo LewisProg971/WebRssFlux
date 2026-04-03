@@ -20,6 +20,7 @@
 - Debut de l'internationalisation FR/EN de l'interface.
 - Persistance de la langue choisie dans localStorage.
 - Surlignage des correspondances dans les cartes lors de la recherche instantanee.
+- Mode "A lire plus tard" avec favoris locaux stockes dans localStorage.
 
 ### 2026-03-30
 - Mise en place du projet Angular en racine.

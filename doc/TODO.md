@@ -23,3 +23,4 @@
 - [x] Ajouter un bouton de rafraichissement manuel des donnees.
 - [x] Coloriser les badges par categorie (Dev/OS/Gaming).
 - [x] Limiter les descriptions avec line-clamp pour l'homogeneite des cartes.
+- [x] Ajouter le mode "A lire plus tard" avec favoris locaux.
