@@ -17,6 +17,8 @@
 - Ajustement du line-clamp de description a 3 lignes pour une grille plus lisible.
 - Dedoublonnage des articles par titre normalise dans le script RSS.
 - Exclusion des articles OS dont le titre contient "Windows 11 Insider Preview".
+- Debut de l'internationalisation FR/EN de l'interface.
+- Persistance de la langue choisie dans localStorage.
 
 ### 2026-03-30
 - Mise en place du projet Angular en racine.

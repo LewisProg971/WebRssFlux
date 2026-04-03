@@ -1,59 +1,68 @@
 <main class="dashboard">
   <header class="hero">
-    <p class="eyebrow">Veille technologique quotidienne</p>
-    <h1>{{ title }}</h1>
+    <div class="hero-top">
+      <p class="eyebrow">{{ ui().eyebrow }}</p>
+
+      <div class="language-switcher" aria-label="Language switcher">
+        <span>{{ ui().languageLabel }}</span>
+        <button [class.active]="language() === 'fr'" (click)="setLanguage('fr')">FR</button>
+        <button [class.active]="language() === 'en'" (click)="setLanguage('en')">EN</button>
+      </div>
+    </div>
+
+    <h1>{{ ui().title }}</h1>
     <p class="subtitle">
-      Un tableau de bord unique pour suivre Dev, IA, OS, hardware et gaming.
+      {{ ui().subtitle }}
       @if (generatedAt()) {
-        <span class="stamp">Derniere mise a jour: {{ formatDate(generatedAt()) }}</span>
+        <span class="stamp">{{ ui().lastUpdated }}: {{ formatDate(generatedAt()) }}</span>
       }
     </p>
   </header>
 
-  <section class="filters" aria-label="Filtres de categorie">
-    <button [class.active]="selectedPillar() === 'all'" (click)="setPillar('all')">Tout</button>
-    <button [class.active]="selectedPillar() === 'dev-ia'" (click)="setPillar('dev-ia')">Dev & IA</button>
-    <button [class.active]="selectedPillar() === 'os-hardware'" (click)="setPillar('os-hardware')">OS & Hardware</button>
-    <button [class.active]="selectedPillar() === 'gaming'" (click)="setPillar('gaming')">Gaming</button>
+  <section class="filters" [attr.aria-label]="ui().categories.all">
+    <button [class.active]="selectedPillar() === 'all'" (click)="setPillar('all')">{{ ui().categories.all }}</button>
+    <button [class.active]="selectedPillar() === 'dev-ia'" (click)="setPillar('dev-ia')">{{ ui().categories['dev-ia'] }}</button>
+    <button [class.active]="selectedPillar() === 'os-hardware'" (click)="setPillar('os-hardware')">{{ ui().categories['os-hardware'] }}</button>
+    <button [class.active]="selectedPillar() === 'gaming'" (click)="setPillar('gaming')">{{ ui().categories.gaming }}</button>
   </section>
 
-  <section class="controls" aria-label="Recherche et tri">
+  <section class="controls" [attr.aria-label]="ui().searchLabel + ' ' + ui().sortLabel">
     <label class="search">
-      <span>Recherche</span>
+      <span>{{ ui().searchLabel }}</span>
       <input
         type="search"
-        placeholder="Titre, source, resume..."
+        [placeholder]="ui().searchPlaceholder"
         [value]="searchQuery()"
         (input)="setSearchQuery($any($event.target).value)"
       />
     </label>
 
     <label class="sort">
-      <span>Tri</span>
+      <span>{{ ui().sortLabel }}</span>
       <select [value]="sortMode()" (change)="setSortMode($any($event.target).value)">
-        <option value="newest">Plus recents</option>
-        <option value="oldest">Plus anciens</option>
-        <option value="source">Par source</option>
+        <option value="newest">{{ sortOptionLabel('newest') }}</option>
+        <option value="oldest">{{ sortOptionLabel('oldest') }}</option>
+        <option value="source">{{ sortOptionLabel('source') }}</option>
       </select>
     </label>
 
     <button class="refresh" (click)="refreshData()" [disabled]="loading() || refreshing()">
       @if (refreshing()) {
-        Rafraichissement...
+        {{ ui().refreshBusy }}
       } @else {
-        Rafraichir les donnees
+        {{ ui().refreshIdle }}
       }
     </button>
 
-    <p class="count">{{ displayedItems().length }} article(s)</p>
+    <p class="count">{{ articleCountLabel }}</p>
   </section>
 
   @if (loading()) {
-    <p class="state">Chargement du flux...</p>
+    <p class="state">{{ ui().loading }}</p>
   } @else if (error()) {
     <p class="state error">{{ error() }}</p>
   } @else if (displayedItems().length === 0) {
-    <p class="state">Aucun article disponible pour ce filtre.</p>
+    <p class="state">{{ ui().noArticles }}</p>
   } @else {
     <section class="grid" aria-label="Articles RSS">
       @for (item of displayedItems(); track item.link) {
@@ -74,7 +83,7 @@
             <a [href]="item.link" target="_blank" rel="noopener noreferrer">{{ item.title }}</a>
           </h2>
 
-          <p class="summary">{{ item.summary || 'Aucun resume fourni.' }}</p>
+          <p class="summary">{{ item.summary || ui().noSummary }}</p>
 
           <footer class="meta">
             <span>{{ formatDate(item.publishedAt) }}</span>
