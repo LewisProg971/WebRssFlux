@@ -37,6 +37,14 @@
       </select>
     </label>
 
+    <button class="refresh" (click)="refreshData()" [disabled]="loading() || refreshing()">
+      @if (refreshing()) {
+        Rafraichissement...
+      } @else {
+        Rafraichir les donnees
+      }
+    </button>
+
     <p class="count">{{ displayedItems().length }} article(s)</p>
   </section>
 

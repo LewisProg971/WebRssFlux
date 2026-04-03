@@ -12,6 +12,7 @@
 ### 2026-04-03
 - Uniformisation visuelle des cartes avec une hauteur fixe pour harmoniser la grille.
 - Limitation d'affichage des titres et resumes (line-clamp) pour eviter les cartes disproportionnees.
+- Mise en place du bouton de rafraichissement manuel des donnees RSS dans l'interface.
 
 ### 2026-03-30
 - Mise en place du projet Angular en racine.

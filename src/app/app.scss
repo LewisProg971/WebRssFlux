@@ -52,7 +52,7 @@ h1 {
 
 .controls {
 	display: grid;
-	grid-template-columns: minmax(220px, 1fr) 220px auto;
+	grid-template-columns: minmax(220px, 1fr) 220px auto auto;
 	gap: 0.9rem;
 	align-items: end;
 	margin: 0 0 1.2rem;
@@ -87,6 +87,27 @@ h1 {
 	justify-self: end;
 	color: #e0c0ac;
 	font-size: 0.9rem;
+}
+
+.refresh {
+	border: 1px solid rgb(242 188 152 / 34%);
+	color: #f8ece3;
+	background: rgb(59 40 31 / 42%);
+	border-radius: 10px;
+	padding: 0.55rem 0.9rem;
+	min-height: 40px;
+	cursor: pointer;
+	transition: transform 140ms ease, background 140ms ease;
+}
+
+.refresh:hover:not(:disabled) {
+	transform: translateY(-1px);
+	background: rgb(86 55 40 / 64%);
+}
+
+.refresh:disabled {
+	opacity: 0.6;
+	cursor: not-allowed;
 }
 
 .filters button {

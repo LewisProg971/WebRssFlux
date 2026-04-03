@@ -36,6 +36,7 @@ export class App {
   protected readonly items = signal<RssItem[]>([])
   protected readonly generatedAt = signal<string | null>(null)
   protected readonly loading = signal(true)
+  protected readonly refreshing = signal(false)
   protected readonly error = signal<string | null>(null)
   protected readonly searchQuery = signal('')
   protected readonly sortMode = signal<SortMode>('newest')
@@ -97,6 +98,10 @@ export class App {
     }
   }
 
+  protected refreshData(): void {
+    this.loadFeed(false)
+  }
+
   protected formatDate(value: string | null): string {
     if (!value) {
       return 'Date inconnue'
@@ -108,19 +113,26 @@ export class App {
     }).format(new Date(value))
   }
 
-  private loadFeed(): void {
-    this.loading.set(true)
+  private loadFeed(showLoadingState = true): void {
+    if (showLoadingState) {
+      this.loading.set(true)
+    } else {
+      this.refreshing.set(true)
+    }
+
     this.error.set(null)
 
-    this.http.get<FeedPayload>('assets/data.json').subscribe({
+    this.http.get<FeedPayload>(`assets/data.json?t=${Date.now()}`).subscribe({
       next: (payload) => {
         this.items.set(payload.items ?? [])
         this.generatedAt.set(payload.generatedAt ?? null)
         this.loading.set(false)
+        this.refreshing.set(false)
       },
       error: () => {
         this.error.set('Impossible de charger les donnees RSS. Lance npm run rss:build puis reessaie.')
         this.loading.set(false)
+        this.refreshing.set(false)
       }
     })
   }
